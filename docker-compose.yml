@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  app:
+    # Constrói a imagem usando o Dockerfile no diretório atual
+    build: .
+    # Define um nome específico para o container
+    container_name: imersao-devops-alura
+    # Mapeia a porta 8000 do container para a porta 8000 do host
+    ports:
+      - "8000:8000"
+    # Para desenvolvimento, monte o código local no container para hot-reloading
+    # Comente ou remova esta seção para builds de produção
+    volumes:
+      - .:/app
+    # Define variáveis de ambiente para o container
+    environment:
+      # Exemplo: Garante que os logs do Python não sejam armazenados em buffer
+      PYTHONUNBUFFERED: 1
+      # Adicione outras variáveis de ambiente aqui, se necessário
+      # MY_VARIABLE: "my_value"
+    # Define a rede que o container irá usar
+    networks:
+      - app_network
+
+# Define as redes usadas pelos serviços
+networks:
+  app_network:
+    driver: bridge
